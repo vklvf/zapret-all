@@ -171,21 +171,30 @@ foreach ($strategy in $strategies) {
         Write-Host "  winws.exe was not detected after start." -ForegroundColor Yellow
     }
 
+    $allTargetsOk = ($targetResults.Count -eq $targets.Count) -and
+        (@($targetResults | Where-Object { -not $_.Ok }).Count -eq 0)
+    $fullyWorking = $started -and $allTargetsOk
+
     $allResults += [PSCustomObject]@{
         Strategy = $strategy.Name
         Score = $score
         Started = $started
         YouTubeOk = $youtubeOk
+        FullyWorking = $fullyWorking
         Targets = $targetResults
     }
 
     Write-Host "  score: $score" -ForegroundColor Yellow
+    if ($fullyWorking) {
+        Write-Host "  All targets passed. Keeping this strategy and stopping the search." -ForegroundColor Green
+        break
+    }
 }
 
 Stop-Bypass
 
 $best = $allResults |
-    Sort-Object @{ Expression = "YouTubeOk"; Descending = $true }, @{ Expression = "Score"; Descending = $true }, @{ Expression = "Started"; Descending = $true } |
+    Sort-Object @{ Expression = "FullyWorking"; Descending = $true }, @{ Expression = "YouTubeOk"; Descending = $true }, @{ Expression = "Score"; Descending = $true }, @{ Expression = "Started"; Descending = $true } |
     Select-Object -First 1
 
 if ($best) {
@@ -198,6 +207,7 @@ foreach ($item in $allResults) {
     $lines += "Score: $($item.Score)"
     $lines += "Started: $($item.Started)"
     $lines += "YouTubeOk: $($item.YouTubeOk)"
+    $lines += "FullyWorking: $($item.FullyWorking)"
     foreach ($target in $item.Targets) {
         $lines += "  $($target.Name): ok=$($target.Ok) code=$($target.Code) time=$($target.Time) exit=$($target.ExitCode) ip=$($target.ResolvedIp) url=$($target.Url)"
     }
