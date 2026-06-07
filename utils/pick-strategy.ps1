@@ -25,11 +25,7 @@ $targets = @(
     @{ Name = "DiscordGateway"; Url = "https://gateway.discord.gg"; Weight = 2 },
     @{ Name = "DiscordCDN"; Url = "https://cdn.discordapp.com"; Weight = 2 },
     @{ Name = "SoundCloud"; Url = "https://soundcloud.com"; Weight = 2 },
-    @{ Name = "SoundCloudMedia"; Url = "https://cf-media.sndcdn.com"; Weight = 1 },
-    @{ Name = "ChatGPT"; Url = "https://chatgpt.com"; Weight = 2 },
-    @{ Name = "OpenAIStatic"; Url = "https://cdn.oaistatic.com"; Weight = 1 },
-    @{ Name = "Claude"; Url = "https://claude.ai"; Weight = 2 },
-    @{ Name = "Anthropic"; Url = "https://www.anthropic.com"; Weight = 1 }
+    @{ Name = "SoundCloudMedia"; Url = "https://cf-media.sndcdn.com"; Weight = 1 }
 )
 
 function Stop-Bypass {
