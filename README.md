@@ -65,7 +65,7 @@ zapret-all.cmd download-telegram
 https://dns.google/dns-query
 ```
 
-Это особенно важно для YouTube и AI-сервисов, если провайдер блокирует DNS.
+Это особенно важно для YouTube, если провайдер блокирует DNS.
 
 ## Добавленные домены
 
